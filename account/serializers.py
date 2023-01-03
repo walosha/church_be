@@ -14,8 +14,6 @@ class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
-    """Serializer for user object"""
-
     class Meta:
         model = CustomUser
         fields = ['email', 'password']
@@ -40,3 +38,9 @@ class PasswordChangeSerializer(serializers.Serializer):
             raise serializers.ValidationError(
                 {'current_password': 'Does not match'})
         return value
+
+
+class ListUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['email']
