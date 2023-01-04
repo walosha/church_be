@@ -9,7 +9,7 @@ class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("password",)}),
         ("Personal info", {
-         "fields": ("first_name", "last_name", "email", "category")}),
+         "fields": ("firstname", "lastname", "email", "category")}),
         (
             "Permissions",
             {
@@ -36,9 +36,9 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm  # Here
     form = CustomUserChangeForm  # Here
     change_password_form = AdminPasswordChangeForm  # Here
-    list_display = ("email", "first_name", "last_name", "is_staff", "category")
+    list_display = ("email", "firstname", "lastname", "is_staff", "category")
     list_filter = ("is_staff", "is_superuser", "is_active", "groups")
-    search_fields = ("first_name", "last_name", "email")
+    search_fields = ("firstname", "lastname", "email")
     ordering = ("email",)
     filter_horizontal = (
         "groups",
