@@ -1,4 +1,5 @@
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.contrib.auth import get_user_model
 from .managers import CustomUserManager
 from rest_framework import serializers
 from .models import CustomUser
@@ -15,15 +16,14 @@ class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
+        firstname = serializers.CharField(required=True, write_only=True)
+        lastname = serializers.CharField(required=True, write_only=True)
         model = CustomUser
-        fields = ['email', 'password']
+        fields = ['email', 'password', 'firstname', 'lastname']
+        extra_kwargs = {'password': {'write_only': True}}
 
     def save(self):
-        user = CustomUser(
-            email=self.validated_data['email'])
-        password = self.validated_data['password']
-        user.set_password(password)
-        user.save()
+        user = get_user_model().objects.create_user(**self.validated_data)
         return user
 
 
@@ -43,4 +43,4 @@ class PasswordChangeSerializer(serializers.Serializer):
 class ListUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['email']
+        fields = ['email', "firstname", "lastname", "category"]

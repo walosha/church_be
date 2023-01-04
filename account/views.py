@@ -13,7 +13,7 @@ class CustomObtainTokenPairView(TokenObtainPairView):
 
 class AuthViewSets(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
-    # serializer_class = ListUserSerializer
+    serializer_class = CreateUserSerializer
 
     def get_serializer_class(self):
         print('get_serializer_class', self.action)
@@ -21,6 +21,10 @@ class AuthViewSets(viewsets.ModelViewSet):
             return ListUserSerializer
         if self.action == 'create':
             return CreateUserSerializer
+        if self.action == 'register':
+            return CreateUserSerializer
+        if self.action == 'change_user_password':
+            return ListUserSerializer
         return super().get_serializer_class()
 
     @action(methods=['POST'],
