@@ -40,7 +40,6 @@ class AuthViewSets(viewsets.ModelViewSet):
 
     @action(methods=['POST'],
             url_path='change_password',
-            permission_classes=[permissions.IsAuthenticated],
             detail=False)
     def change_user_password(self, request, pk=None):
         serializer = PasswordChangeSerializer(
