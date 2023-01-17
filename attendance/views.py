@@ -11,3 +11,13 @@ class AttendanceListCreateAPIView(generics.ListCreateAPIView):
 class AttendanceRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
+
+
+class AttendanceUpdateAPIView(generics.UpdateAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer
+
+
+class AttendanceDestroyAPIView(generics.DestroyAPIView):
+    queryset = Attendance.objects.all()
+    serializer_class = AttendanceSerializer

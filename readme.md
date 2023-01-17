@@ -22,3 +22,4 @@
 - Email marketing
 - Live streeming
 - schedule meetings
+- Video and audio for sermons

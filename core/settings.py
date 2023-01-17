@@ -134,7 +134,7 @@ SWAGGER_SETTINGS = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'SCHEMA_PATH_PREFIX': r'/api/v1',
+    'SCHEMA_PATH_PREFIX': r'/api',
     'DEFAULT_GENERATOR_CLASS': 'drf_spectacular.generators.SchemaGenerator',
     'SERVE_PERMISSIONS': ['rest_framework.permissions.AllowAny'],
     'COMPONENT_SPLIT_PATCH': True,
