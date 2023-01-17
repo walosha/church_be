@@ -2,8 +2,6 @@ from django.db import models
 from event.models import Event
 from core.models import AuditableModel
 
-# Create your models here.
-
 
 class Attendance (AuditableModel):
     eventId = models.ForeignKey(

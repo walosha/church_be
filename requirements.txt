@@ -1,5 +1,5 @@
 django>=4.0.0,<4.1.0
-djangorestframework
+djangorestframework>=3.13.1,!=3.14.0
 pyyaml
 django-cors-headers==3.5.0
 djangorestframework-simplejwt
@@ -8,3 +8,4 @@ dj-database-url==0.5.0
 python-decouple==3.6
 psycopg2-binary==2.9.3
 django-import-export==2.8.0
+drf-spectacular==0.22.1
