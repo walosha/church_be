@@ -13,7 +13,7 @@
 - Pledges managemnts
 - Public display and/or reporting for collections, donations, offerings
 - e-bible
-- post & comments
+- Blog (post & comments )
 - Polls and Surveys
 - Events Callender for activities, meetings, events and programs
 - Prayer Request

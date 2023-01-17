@@ -1,5 +1,5 @@
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework import viewsets, status, permissions
+from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from .serializers import CreateUserSerializer, PasswordChangeSerializer, CustomObtainTokenPairSerializer, ListUserSerializer
 from rest_framework.response import Response
