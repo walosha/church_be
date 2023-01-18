@@ -1,16 +1,21 @@
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework import generics
+# from django.db.models import Count
 
 
-# Post serializer
+class PostCreateAPIView(generics.CreateAPIView):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
 
-class PostListCreateAPIView(generics.ListCreateAPIView):
+
+class PostListAPIView(generics.ListAPIView):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
 
 class PostRetrieveAPIView(generics.RetrieveAPIView):
+
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
@@ -25,7 +30,7 @@ class PostDestroyAPIView(generics.DestroyAPIView):
     serializer_class = PostSerializer
 
 
-# Commment serializer
+# Commment
 class CommentListCreateAPIView(generics.ListCreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer

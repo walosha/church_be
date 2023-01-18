@@ -3,16 +3,27 @@ from django.db import models
 from core.models import AuditableModel
 from django.utils import timezone
 from account.models import CustomUser
+from taggit.managers import TaggableManager
+from .manager import PublishedManager
+from taggit.models import GenericUUIDTaggedItemBase, TaggedItemBase
+from django.utils.translation import gettext_lazy as _
+from uuid import uuid4
 
-# from .manager import PublishedManager
+
+def generateUUID():
+    return str(uuid4())
 
 
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().filter(status=Post.Status.PUBLISHED)
+class UUIDTaggedItem(GenericUUIDTaggedItemBase, TaggedItemBase):
+    class Meta:
+        verbose_name = _("Tag")
+        verbose_name_plural = _("Tags")
 
 
 class Post(AuditableModel):
+    id = models.UUIDField(
+        primary_key=True, default=generateUUID, editable=False)
+
     class Status(models.TextChoices):
         DRAFT = 'DF', 'Draft'
         PUBLISHED = 'PB', 'Published'
@@ -29,6 +40,8 @@ class Post(AuditableModel):
     objects = models.Manager()  # The default manager.
     published = PublishedManager()  # Our custom manager.
 
+    tags = TaggableManager(through=UUIDTaggedItem)
+
     class Meta:
         ordering = ['-publish']
         indexes = [
@@ -39,7 +52,7 @@ class Post(AuditableModel):
         return self.title
 
     def save(self, *args, **kwargs):
-        self.slug = str(f'{self.author.firstname} {self.author.lastname}').replace(
+        self.slug = str(f'{self.title}').replace(
             " ", "-").strip().lower() + '-' + str(int(time.time()))
         return super().save(*args, **kwargs)
 
@@ -50,7 +63,7 @@ class Comment(AuditableModel):
                                related_name='comments')
     author = models.ForeignKey(CustomUser,
                                on_delete=models.CASCADE,
-                               related_name='comments')
+                               related_name='author')
     body = models.TextField()
     active = models.BooleanField(default=True)
 

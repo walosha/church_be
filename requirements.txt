@@ -9,3 +9,4 @@ python-decouple==3.6
 psycopg2-binary==2.9.3
 django-import-export==2.8.0
 drf-spectacular==0.22.1
+django-taggit==3.0.0

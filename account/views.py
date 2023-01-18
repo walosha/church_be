@@ -16,7 +16,6 @@ class AuthViewSets(viewsets.ModelViewSet):
     serializer_class = CreateUserSerializer
 
     def get_serializer_class(self):
-        print('get_serializer_class', self.action)
         if self.action == 'list':
             return ListUserSerializer
         if self.action == 'create':

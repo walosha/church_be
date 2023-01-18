@@ -45,6 +45,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
+TAGGIT_CASE_INSENSITIVE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -59,10 +60,11 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'import_export',
+    'taggit',
     "account",
     "attendance",
     "event",
-    "blog"
+    "blog",
 
 ]
 # AUTH_USER_MODEL = "users.CustomUser"
@@ -192,9 +194,11 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication'
     ],
-    # "DEFAULT_PERMISSION_CLASSES": [
-    #     "rest_framework.permissions.IsAuthenticatedOrReadOnly"
-    # ]
+    'DEFAULT_PAGINATION_CLASS': 'core.pagination.CustomPagination',
+    'PAGE_SIZE': 10,
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticatedOrReadOnly"
+    ]
 
 }
 

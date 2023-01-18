@@ -5,6 +5,15 @@ from rest_framework import serializers
 from .models import CustomUser
 
 
+class BasicUserSerializer(serializers.ModelSerializer):
+    status = serializers.SerializerMethodField()
+
+    class Meta:
+        model = get_user_model()
+        fields = [
+            'id', 'firstname', 'lastname', 'email', 'category']
+
+
 class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
     serializer_class = CustomUserManager
 
@@ -43,4 +52,4 @@ class PasswordChangeSerializer(serializers.Serializer):
 class ListUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['email', "firstname", "lastname", "category"]
+        fields = ["id", 'email', "firstname", "lastname", "category"]
