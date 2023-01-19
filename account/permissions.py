@@ -11,3 +11,16 @@ class IsStaffEditorPermission(permissions.DjangoModelPermissions):
         'PATCH': ['%(app_label)s.change_%(model_name)s'],
         'DELETE': ['%(app_label)s.delete_%(model_name)s'],
     }
+
+
+class IsAdmin(permissions.BasePermission):
+    """Allows access to only Dashboard viewers"""
+    message = "Non-admin user are not allowed"
+
+    def has_permission(self, request, view):
+        if request.user and request.user.is_authenticated:
+            print(request.user.role)
+            return bool(
+                request.user.role
+                in ["admin"])
+        return False

@@ -2,7 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
-from .enums import category
+from .enums import CATEGORY, ROLES
 
 
 class CustomUser(AbstractUser):
@@ -10,10 +10,11 @@ class CustomUser(AbstractUser):
     email = models.EmailField('email address', unique=True)  # Here
     firstname = models.CharField(max_length=256)  # Here
     lastname = models.CharField(max_length=256)  # Here
+    role = models.CharField(max_length=50, choices=ROLES)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     category = models.CharField(
-        default='unknown', max_length=20, choices=category)
+        default='unknown', max_length=20, choices=CATEGORY)
     objects = CustomUserManager()  # Here
 
     class Meta:

@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'import_export',
+    'django_filters',
     'taggit',
     "account",
     "attendance",
@@ -149,11 +150,11 @@ SPECTACULAR_SETTINGS = {
         "displayRequestDuration": True
     },
     'UPLOADED_FILES_USE_URL': True,
-    'TITLE': 'Church Management syetem',
+    'TITLE': 'Church Management system',
     'DESCRIPTION': 'Church API Doc',
     'VERSION': '1.0.0',
     'LICENCE': {'name': 'BSD License'},
-    'CONTACT': {'name': 'OLawale', 'email': 'walosha@yahoo.com'},
+    'CONTACT': {'name': 'Olawale', 'email': 'walosha@yahoo.com'},
 
     # Oauth2 related settings. used for example by django-oauth2-toolkit.
     # https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.3.md#oauth-flows-object

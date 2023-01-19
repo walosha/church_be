@@ -11,8 +11,9 @@
 - python manage.py runserver
 
 `
+@@ Access swagger documentation on : api/doc/#/
 
-## App Features (Content Mgt System)
+## Features (Content Mgt System)
 
 - User management (roles/permissions) / Members directory / Groups
 - Attendance system

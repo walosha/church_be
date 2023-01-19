@@ -6,7 +6,6 @@ from django.contrib.auth import get_user_model
 class CustomUserManager(UserManager):  # Here
 
     def _create_user(self, email, password, firstname, lastname,  **extra_fields):
-        print(firstname, lastname)
 
         if not email:
             raise ValueError("The given email must be set")
