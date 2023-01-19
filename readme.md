@@ -1,9 +1,16 @@
-# Django Rest Framework
+# Church management app
 
-- python3 -m venv venv
+`
+
+- Clone this repository
+- docker compose --build && docker compose up
 - source ./venv/bin/activate
 - pip install -r requirements.txt
-- django-admin startproject backend .
+- python manage.py makemigrations
+- python manage.py migrate
+- python manage.py runserver
+
+`
 
 ## App Features (Content Mgt System)
 
