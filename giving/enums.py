@@ -1,2 +1,6 @@
 STATUS = (("PENDING", "PENDING"), ("PAID", "PAID"),
           ("FAILED", "FAILED"))
+
+
+GIVING_TYPE = (("OFFERING", "OFFERING"), ("DONATION", "DONATION"),
+               ("TITHE", "TITHE"), ("BUILDING", "BUILDING"))

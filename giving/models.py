@@ -1,7 +1,7 @@
 from django.db import models
 from core.models import AuditableModel
 from account.models import CustomUser
-from .enums import STATUS
+from .enums import STATUS, GIVING_TYPE
 # Create your models here.
 
 
@@ -14,6 +14,9 @@ class Giving (AuditableModel):
     status = models.CharField(max_length=20,
                               choices=STATUS,
                               default="PENDING")
+    type = models.CharField(max_length=20,
+                            choices=GIVING_TYPE,
+                            default="DONATION")
     note = models.CharField(max_length=256)
     phone = models.CharField(
         max_length=11, blank=True, null=True)

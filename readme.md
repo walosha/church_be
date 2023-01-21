@@ -22,8 +22,8 @@
 - Polls and Surveys
 - pleadges, offering and donation
 - Prayer Request ,Contact
-- Email marketing
-- Live streeming
 - schedule meetings
+- Email
+- Live streeming
 - e-bible
 - Video and audio for sermons
