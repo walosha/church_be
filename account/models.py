@@ -18,6 +18,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     category = models.CharField(
         default='unknown', max_length=20, choices=CATEGORY)
     objects = CustomUserManager()  # Here
+    # skills = models.CharField()
 
     class Meta:
         verbose_name = "user"

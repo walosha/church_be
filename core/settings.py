@@ -49,11 +49,11 @@ TAGGIT_CASE_INSENSITIVE = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.staticfiles',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
     'drf_spectacular',
     'corsheaders',
     'rest_framework',
@@ -73,6 +73,11 @@ INSTALLED_APPS = [
 ]
 # AUTH_USER_MODEL = "users.CustomUser"
 AUTH_USER_MODEL = 'account.CustomUser'  # Here
+
+STATIC_URL = 'static/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = "/media/"
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,6 +104,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
+
             ],
         },
     },

@@ -19,10 +19,9 @@
 - Events (meetings, events and programs) for activities Callender
 - Attendance system for events
 - Blog (post & comments )
+- Polls and Surveys
 - pleadges, offering and donation
 - Prayer Request ,Contact
-- Polls and Surveys
-- User Audit and logs
 - Email marketing
 - Live streeming
 - schedule meetings
