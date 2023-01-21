@@ -16,18 +16,15 @@
 ## Features (Content Mgt System)
 
 - User management (roles/permissions) / Members directory / Groups
-- Attendance system
-- offering and donation
-- Pledges managemnts
-- Public display and/or reporting for collections, donations, offerings
-- e-bible
+- Events (meetings, events and programs) for activities Callender
+- Attendance system for events
 - Blog (post & comments )
+- pleadges, offering and donation
+- Prayer Request ,Contact
 - Polls and Surveys
-- Events Callender for activities, meetings, events and programs
-- Prayer Request
-- Contact
 - User Audit and logs
 - Email marketing
 - Live streeming
 - schedule meetings
+- e-bible
 - Video and audio for sermons

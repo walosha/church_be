@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     "event",
     "blog",
     "poll",
-    "message"
+    "message",
+    "siteinfo"
 
 ]
 # AUTH_USER_MODEL = "users.CustomUser"

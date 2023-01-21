@@ -2,7 +2,7 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
 from .managers import CustomUserManager
 from rest_framework import serializers
-from .models import CustomUser
+from .models import CustomUser, ChurchGroup
 
 
 class BasicUserSerializer(serializers.ModelSerializer):
@@ -49,7 +49,28 @@ class PasswordChangeSerializer(serializers.Serializer):
         return value
 
 
+class ChurchGroupSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ChurchGroup
+        fields = '__all__'
+
+
+class UserChurchGroupSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ChurchGroup
+        fields = ("id", 'name')
+
+
 class ListUserSerializer(serializers.ModelSerializer):
+    group_list = UserChurchGroupSerializer(many=True, read_only=True)
+
     class Meta:
         model = CustomUser
-        fields = ["id", 'email', "firstname", "lastname", "category"]
+        order = ('-created_at')
+        fields = ("id", 'email', "firstname",
+                  "lastname", "category", "group_list")
+
+    def to_representation(self, instance):
+        print(instance)
+        return super().to_representation(instance)
