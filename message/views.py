@@ -8,8 +8,10 @@ class MessageListCreateAPIView(generics.ListCreateAPIView):
     serializer_class = MessageSerializer
 
     def perform_create(self, serializer):
-        print(self, "----------", serializer)
-        serializer.save(user=self.request.user)
+        if self.request.user.is_authenticated:
+            serializer.save(user=self.request.user)
+        else:
+            serializer.save()
 
 
 class MessageRetrieveAPIView(generics.RetrieveAPIView):
