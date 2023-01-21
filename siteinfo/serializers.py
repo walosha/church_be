@@ -1,23 +1,10 @@
 # django #selenium #webscraping
 from rest_framework import serializers
-from taggit.serializers import (TagListSerializerField,
-                                TaggitSerializer)
-from .models import Post, Comment
+from .models import SiteInfo
 
 
-class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.UUIDField()
+class SiteInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Comment
+        model = SiteInfo
         fields = '__all__'
-
-
-class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
-    tags = TagListSerializerField()
-    comments = CommentSerializer(many=True, read_only=True)
-    author = serializers.UUIDField()
-
-    class Meta:
-        model = Post
-        fields = ('title', "author", "slug", "comments", "tags", "status")
