@@ -13,5 +13,8 @@ class Attendance (AuditableModel):
     class Meta:
         ordering = ('-created_at',)
 
-    def __str__(self) -> str:
-        return self.id
+    def __str__(self):
+        return str(self.id)
+
+    def count(self):
+        return self.attendees.count()

@@ -16,6 +16,7 @@ urlpatterns = [
     path('api/events/', include('event.urls')),
     path('api/blogs/', include('blog.urls')),
     path('api/siteinfo/', include('siteinfo.urls')),
+    path('api/giving/', include('giving.urls')),
     # Optional UI:
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/doc/',
