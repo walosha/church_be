@@ -4,7 +4,7 @@ from rest_framework import status, viewsets, filters, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from .serialisers import PollCategorySerializer, PollSerializer, PollListSerializer, QuestionCreateSerializer
+from .serialisers import PollCategorySerializer, PollSerializer, PollListSerializer, QuestionCreateSerializer, QuestionSerializer
 from .models import Poll, PollQuestion, PollCategory
 from .filters import PollFilter
 from account.permissions import IsAdmin
@@ -60,7 +60,9 @@ class PollViewSets(viewsets.ModelViewSet):
         poll = self.get_object()
         if request.method == 'GET':
             qs = PollQuestion.objects.filter(poll=poll)
-            serializer = PollQuestion(qs, many=True)
+            print('qs', qs)
+            serializer = QuestionSerializer(qs, many=True)
+            print({"serializer": serializer})
             return Response(
                 {'success': True, 'data': serializer.data},
                 status=status.HTTP_200_OK)

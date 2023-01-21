@@ -9,8 +9,9 @@ urlpatterns = [
     path('api/auth/', include('account.urls')),
     path('api/polls/', include('poll.urls')),
     path('api/attendances/', include('attendance.urls')),
+    path('api/messages/', include('message.urls')),
     path('api/events/', include('event.urls')),
-    path('api/', include('blog.urls')),
+    path('api/blogs/', include('blog.urls')),
     # Optional UI:
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/doc/',
