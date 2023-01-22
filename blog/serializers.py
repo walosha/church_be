@@ -2,7 +2,7 @@
 from rest_framework import serializers
 from taggit.serializers import (TagListSerializerField,
                                 TaggitSerializer)
-from .models import Post, Comment
+from .models import Post, Comment, Publication
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -27,5 +27,5 @@ class PublicationSerializer(TaggitSerializer, serializers.ModelSerializer):
     author = serializers.UUIDField()
 
     class Meta:
-        model = Comment
+        model = Publication
         fields = '__all__'

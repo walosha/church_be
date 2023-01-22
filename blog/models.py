@@ -94,10 +94,6 @@ class Publication(AuditableModel):
     status = models.CharField(max_length=2,
                               choices=Status.choices,
                               default=Status.DRAFT)
-    objects = models.Manager()  # The default manager.
-    published = PublishedManager()  # Our custom manager.
-
-    tags = TaggableManager(through=UUIDTaggedItem)
 
     class Meta:
         ordering = ['-publish']
@@ -107,8 +103,3 @@ class Publication(AuditableModel):
 
     def __str__(self):
         return self.title
-
-    def save(self, *args, **kwargs):
-        self.slug = str(f'{self.title}').replace(
-            " ", "-").strip().lower() + '-' + str(int(time.time()))
-        return super().save(*args, **kwargs)

@@ -12,7 +12,7 @@ class CustomUser(AbstractUser, PermissionsMixin):
     email = models.EmailField('email address', unique=True)  # Here
     firstname = models.CharField(max_length=256)  # Here
     lastname = models.CharField(max_length=256)  # Here
-    role = models.CharField(max_length=50, choices=ROLES)
+    role = models.CharField(max_length=50, choices=ROLES, default="USER")
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
     category = models.CharField(
