@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import PostCreateAPIView, PostListAPIView, PostRetrieveAPIView, PostDestroyAPIView, PostUpdateAPIView, CommentListCreateAPIView, CommentRetrieveAPIView, CommentDestroyAPIView, CommentUpdateAPIView
+from .views import PostCreateAPIView, PostListAPIView, PostRetrieveAPIView, PostDestroyAPIView, PostUpdateAPIView, CommentListCreateAPIView, CommentRetrieveAPIView, CommentDestroyAPIView, CommentUpdateAPIView, PublicationCreateAPIView, PublicationListAPIView, PublicationRetrieveAPIView, PublicationDestroyAPIView, PublicationUpdateAPIView
 
 urlpatterns = [
     path('posts/<uuid:pk>/', PostRetrieveAPIView.as_view(),
@@ -15,4 +15,13 @@ urlpatterns = [
     path('coments/<uuid:pk>/', CommentUpdateAPIView.as_view(), name="comment_update"),
     path('coments/<uuid:pk>/', CommentDestroyAPIView.as_view(),
          name="event_delete"),
+    path('posts/<uuid:pk>/', PublicationRetrieveAPIView.as_view(),
+         name="publication_detail"),
+    path('publication/create/', PublicationCreateAPIView.as_view(),
+         name="publication_create"),
+    path('publication/', PublicationListAPIView.as_view(), name="publication_list"),
+    path('publication/<uuid:pk>/', PublicationUpdateAPIView.as_view(),
+         name="publication_update"),
+    path('publication/<uuid:pk>/', PublicationDestroyAPIView.as_view(),
+         name="publication_delete"),
 ]

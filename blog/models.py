@@ -75,3 +75,40 @@ class Comment(AuditableModel):
 
     def __str__(self):
         return f'Comment by {self.author} on {self.postId}'
+
+
+class Publication(AuditableModel):
+    id = models.UUIDField(
+        primary_key=True, default=generateUUID, editable=False)
+
+    class Status(models.TextChoices):
+        DRAFT = 'DF', 'Draft'
+        PUBLISHED = 'PB', 'Published'
+    title = models.CharField(max_length=250)
+    image = models.ImageField(upload_to='publication/%Y/%m/%d/')
+    author = models.ForeignKey(CustomUser,
+                               on_delete=models.CASCADE,
+                               related_name='blog_publication')
+    body = models.TextField()
+    publish = models.DateTimeField(default=timezone.now)
+    status = models.CharField(max_length=2,
+                              choices=Status.choices,
+                              default=Status.DRAFT)
+    objects = models.Manager()  # The default manager.
+    published = PublishedManager()  # Our custom manager.
+
+    tags = TaggableManager(through=UUIDTaggedItem)
+
+    class Meta:
+        ordering = ['-publish']
+        indexes = [
+            models.Index(fields=['-publish']),
+        ]
+
+    def __str__(self):
+        return self.title
+
+    def save(self, *args, **kwargs):
+        self.slug = str(f'{self.title}').replace(
+            " ", "-").strip().lower() + '-' + str(int(time.time()))
+        return super().save(*args, **kwargs)

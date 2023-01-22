@@ -21,3 +21,11 @@ class PostSerializer(TaggitSerializer, serializers.ModelSerializer):
     class Meta:
         model = Post
         fields = ('title', "author", "slug", "comments", "tags", "status")
+
+
+class PublicationSerializer(TaggitSerializer, serializers.ModelSerializer):
+    author = serializers.UUIDField()
+
+    class Meta:
+        model = Comment
+        fields = '__all__'
