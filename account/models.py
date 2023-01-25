@@ -5,7 +5,11 @@ from .managers import CustomUserManager
 from .enums import CATEGORY, ROLES
 from core.models import AuditableModel
 from django.contrib.auth.models import PermissionsMixin
+from django.contrib.postgres.fields import ArrayField
 
+
+def get_skill_default():
+    return list()
 
 class CustomUser(AbstractUser, PermissionsMixin):
     username = None  # Here
@@ -18,7 +22,10 @@ class CustomUser(AbstractUser, PermissionsMixin):
     category = models.CharField(
         default='unknown', max_length=20, choices=CATEGORY)
     objects = CustomUserManager()  # Here
-    # skills = models.CharField()
+    skills = ArrayField(
+            models.CharField(max_length=20, blank=True),
+        default=get_skill_default 
+      )
 
     class Meta:
         verbose_name = "user"

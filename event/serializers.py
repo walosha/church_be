@@ -10,3 +10,7 @@ class EventSerializer(serializers.ModelSerializer):
         # fields = ('id', 'title', 'description', 'completed')
         # Shortcut for getting all fields
         fields = '__all__'
+        extra_kwargs = {
+             'owner': {'read_only': True},
+        }     
+       

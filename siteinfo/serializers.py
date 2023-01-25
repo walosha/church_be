@@ -7,4 +7,10 @@ class SiteInfoSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SiteInfo
-        fields = '__all__'
+        exclude = ["lock"]
+
+
+    def to_representation(self, instance):
+        print(instance)
+        return super().to_representation(instance)
+  

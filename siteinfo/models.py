@@ -6,7 +6,10 @@ from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
-class SiteInfo (AuditableModel):
+class SiteInfo (models.Model):
+    lock = models.CharField(max_length=1, null=False, primary_key=True, default='X')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     meta_title = models.CharField(max_length=100, blank=False)
     meta_description = models.CharField(max_length=100, blank=False)
     title = models.CharField(max_length=100, blank=False)
@@ -29,3 +32,8 @@ class SiteInfo (AuditableModel):
         ordering = ('-created_at',)
         def __str__(self) -> str:
             return self.title
+
+
+    def save(self, *args, **kwargs):
+       self.pk = 'X'
+       super().save(*args, **kwargs)        

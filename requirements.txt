@@ -13,3 +13,5 @@ django-taggit==3.0.0
 django-filter==22.1
 pillow==9.4.0
 cloudinary=1.31.0
+django-podcasting=1.3.2
+python-dotenv=0.21.1

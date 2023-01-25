@@ -26,9 +26,10 @@ class CustomObtainTokenPairSerializer(TokenObtainPairSerializer):
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         firstname = serializers.CharField(required=True, write_only=True)
+        skills = serializers.CharField(required=False, write_only=True)
         lastname = serializers.CharField(required=True, write_only=True)
         model = CustomUser
-        fields = ['email', 'password', 'firstname', 'lastname']
+        fields = ['email', 'password', 'firstname', 'lastname',"skills"]
         extra_kwargs = {'password': {'write_only': True}}
 
     def save(self):
@@ -69,7 +70,7 @@ class ListUserSerializer(serializers.ModelSerializer):
         model = CustomUser
         order = ('-created_at')
         fields = ("id", 'email', "firstname",
-                  "lastname", "category", "group_list")
+                  "lastname", "category", "group_list","skills")
 
     def to_representation(self, instance):
         print(instance)
