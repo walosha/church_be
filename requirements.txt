@@ -11,3 +11,5 @@ django-import-export==2.8.0
 drf-spectacular==0.22.1
 django-taggit==3.0.0
 django-filter==22.1
+pillow==9.4.0
+cloudinary=1.31.0

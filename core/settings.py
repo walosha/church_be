@@ -14,6 +14,9 @@ from pathlib import Path
 from datetime import timedelta
 import dj_database_url
 from decouple import config
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -55,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'drf_spectacular',
+    'cloudinary',
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
@@ -119,6 +123,11 @@ DATABASES = {
     "default": dj_database_url.config(default=config('DATABASE_URL'))
 }
 
+cloudinary.config( 
+  cloud_name = "walosha", 
+  api_key = "754947971137564", 
+  api_secret = "EELIIr1XwH0XMljIFaMvmSz1NBQ" 
+)
 
 # DATABASES = {
 #     'default': {
