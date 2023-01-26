@@ -15,3 +15,4 @@ pillow==9.4.0
 cloudinary=1.31.0
 django-podcasting=1.3.2
 python-dotenv=0.21.1
+google-api-python-client

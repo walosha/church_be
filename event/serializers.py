@@ -14,3 +14,11 @@ class EventSerializer(serializers.ModelSerializer):
              'owner': {'read_only': True},
         }     
        
+
+
+
+class CalenderSerializer(serializers.Serializer):
+
+    eventTitle = serializers.CharField(label="event", max_length=255, required=True)
+    startDateTime = serializers.DateTimeField(label="startDateTime", input_formats=['%Y/%m/%d %H:%M'], required=True)
+    endDateTime = serializers.DateTimeField(label="endDateTime", input_formats=['%Y/%m/%d %H:%M'], required=True)

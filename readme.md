@@ -19,6 +19,7 @@
 - Events (meetings, events and programs) for activities Callender
 - Attendance system for events
 - Blog (post & comments )
+- Podcast (Video and audio for sermons)
 - Polls and Surveys
 - pleadges, offering and donation
 - Prayer Request ,Contact
@@ -26,4 +27,3 @@
 - Email
 - Live streeming
 - e-bible
-- Video and audio for sermons
