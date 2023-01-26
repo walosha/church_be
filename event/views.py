@@ -4,6 +4,7 @@ from rest_framework import generics,response,status
 from .serializers import EventSerializer,CalenderSerializer
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
+from googleapiclient.errors import HttpError
 from datetime import  datetime 
 import pytz,uuid
 
@@ -57,69 +58,73 @@ class CalenderCreateAPIView (generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         request = request.data
         if self.request:
-            return self.form_valid(request)
+            return self.get_context_data(request)
         else:
-            return self.form_invalid(request)
+            return self.form_valid(request)
 
 
-    def form_valid(self, form):
+    def form_valid(self, request):
 
-        eventTitle = form.get("eventTitle")
-        start_date_data = form.get("startDateTime")
-        end_date_data = form.get("endDateTime")
+        eventTitle = request.get("eventTitle")
+        start_date_data = request.get("startDateTime")
+        end_date_data = request.get("endDateTime")
 
         if start_date_data > end_date_data:
             return response.Response({"mesage": 'Please enter the correct period.'})
         service = build_service(self.request)
-        print(datetime.now(pytz.timezone('US/Central')).isoformat())
         event = {
-                    "summary": eventTitle,
-                    "start": {"dateTime": datetime.now(pytz.timezone('US/Central')).isoformat()},
-                    "end": {"dateTime": datetime.now(pytz.timezone('US/Central')).isoformat()},
-                    # "attendees": [{"email": "walosha@gmail.com"}],
-                    "conferenceData": {"createRequest": {"requestId": f"{uuid.uuid4().hex}"}},
-                    "description": eventTitle,                                 
-                    "reminders": {"useDefault": True}
+            "calendarId": calendarId,
+            "conferenceDataVersion": 1,
+            "end": {
+                'dateTime': datetime.now(pytz.timezone('US/Central')).isoformat(),
+                'timeZone': 'US/Central'
+            },
+            "start": {
+                'dateTime': '2023-01-25T17:00:00-07:00',
+                'timeZone': 'US/Central'
+            },
+            "conferenceData": {
+                "entryPoints": [{"entryPointType": "video",}],
+                "createRequest": {
+                "conferenceSolutionKey": {
+                    "type": "hangoutsMeet"
+                },
+                "requestId": f"{uuid.uuid4().hex}"
                 }
-       
+            },
+            "summary": eventTitle
+            }
+
+        # Implement worldwide delegation on admin account
+        
+        # result = service.events().insert(conferenceDataVersion=1,calendarId=calendarId, body=event).execute()
         result = service.events().insert(calendarId=calendarId, body=event).execute()
-        print(result)
         return response.responses({"data":result.get('organizer'),"status":status.HTTP_201_CREATED})
 
-    # def get_success_url(self):
 
-    #     messages.add_message(self.request, messages.INFO, 'Form submission success!!')
+    def get_context_data(self, request):
+        """Shows basic usage of the Google Calendar API.
+        Prints the start and name of the next 10 events on the user's calendar.
+        """
+        try:
+        
+            service = build_service(self.request)
 
-    #     return reverse('cal:home')
+            events_result = service.events().list(calendarId=calendarId, timeMin='2022-01-25T17:00:00-07:00',
+                                                maxResults=10, singleEvents=True,
+                                                orderBy='startTime').execute()
+            events = events_result.get('items', [])
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(HomeView, self).get_context_data(**kwargs)
-    #     form = BookingForm()
-    #     booking_event = []
-    #     service = build_service(self.request)
-    #     events = (
-    #         service.events().list(
-    #             calendarId=calendarId,
-    #         ).execute()
-    #     )
+            if not events:
+                print('No upcoming events found.')
+                return
 
-    #     for event in events['items']:
-
-    #         event_title = event['summary']
-
-    #         # Deleted the last 6 characters (deleted UTC time)
-    #         start_date_time = event["start"]["dateTime"]
-    #         start_date_time = start_date_time[:-6]
-
-    #         # Deleted the last 6 characters (deleted UTC time)
-    #         end_date_time = event['end']["dateTime"]
-    #         end_date_time = end_date_time[:-6]
-
-    #         booking_event.append([event_title, start_date_time, end_date_time])
-
-    #     context = {
-    #         "form":form,
-    #         "booking_event" : booking_event,
-    #     }
-
-    #     return context
+            # Prints the start and name of the next 10 events
+            for event in events:
+                start = event['start'].get('dateTime', event['start'].get('date'))
+                print("---",start, event['summary'],"---")
+            return response.responses(data=event,status=status.HTTP_201_CREATED)
+                
+        except HttpError as error:
+          print('An error occurred: %s' % error)
+  
