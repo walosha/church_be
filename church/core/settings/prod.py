@@ -17,13 +17,12 @@ ADMINS = [
 ]
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ['localhost',
+  '127.0.0.1',
+  '*']
 
 
-INTERNAL_IPS = ["127.0.0.1",
-                'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop']
-
-
+INTERNAL_IPS = ["127.0.0.1"]
 
 
 USE_X_FORWARDED_HOST = True
@@ -39,10 +38,12 @@ DATABASES = {
         "NAME": "postgres",
         "USER": "postgres",
         "PASSWORD": "password",
-        "HOST": "pg1",  # set in docker-compose.yml
+        "HOST": "pg1,",  # set in docker-compose.yml
         "PORT": 5432,  # default postgres port
     }
 }
+
+
 
 
 SIMPLE_JWT = {

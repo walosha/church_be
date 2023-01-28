@@ -3,21 +3,34 @@ services:
   pg1:
     container_name: church_postgres
     image: postgres
-    ports:
-      - "5432:5432"
     volumes:
       - pg1_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=password
+
   web:
     build: .
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    command: [
+        # "bash",
+        # "-c",
+        # "chmod +x ./wait-for-it.sh",
+        # "&&",
+        "./wait-for-it.sh",
+        "pg1:5432",
+        "--",
+        "python",
+        "/code/church/manage.py",
+        "runserver",
+        "0.0.0.0:8000",
+      ]
+
     restart: always
     volumes:
       - .:/code
-    ports:
-      - "8000:8000"
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.prod
+    depends_on:
+      - pg1
+
 volumes:
   pg1_data:
