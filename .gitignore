@@ -22,3 +22,6 @@ photos/
 chapters.txt
 media/
 church-375900-fbd978c352ca.json
+new.json
+old.json
+.env.prod

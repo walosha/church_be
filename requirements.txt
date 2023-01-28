@@ -12,7 +12,10 @@ drf-spectacular==0.22.1
 django-taggit==3.0.0
 django-filter==22.1
 pillow==9.4.0
-cloudinary=1.31.0
-django-podcasting=1.3.2
-python-dotenv=0.21.1
+cloudinary==1.31.0
+django-podcasting==1.3.2
+python-dotenv==0.21.1
 google-api-python-client
+psycopg2==2.9.3
+uwsgi==2.0.20
+daphne==3.0.2

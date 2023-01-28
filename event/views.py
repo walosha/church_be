@@ -10,10 +10,9 @@ import pytz,uuid
 
 
 
-
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 service_account_email = os.getenv('GOOGLE_SERVICE_ACCOUNT')
-credentials = service_account.Credentials.from_service_account_file('church-375900-fbd978c352ca.json')
+credentials = service_account.Credentials.from_service_account_file('old.json')
 scoped_credentials = credentials.with_scopes(SCOPES)
 calendarId = os.getenv('CALENDER_ID')
 
@@ -58,7 +57,7 @@ class CalenderCreateAPIView (generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
         request = request.data
         if self.request:
-            return self.get_context_data(request)
+            return self.form_valid(request)
         else:
             return self.form_valid(request)
 
@@ -74,7 +73,7 @@ class CalenderCreateAPIView (generics.CreateAPIView):
         service = build_service(self.request)
         event = {
             "calendarId": calendarId,
-            "conferenceDataVersion": 1,
+            # "conferenceDataVersion": 1,
             "end": {
                 'dateTime': datetime.now(pytz.timezone('US/Central')).isoformat(),
                 'timeZone': 'US/Central'

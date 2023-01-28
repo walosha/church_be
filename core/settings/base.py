@@ -10,44 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
-from dotenv import load_dotenv
 from pathlib import Path
-from datetime import timedelta
-import dj_database_url
-from decouple import config
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = [
-    "127.0.0.1", "0.0.0.0", "localhost", "api", "chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop"]
-INTERNAL_IPS = ["127.0.0.1",
-                'chrome-extension://fhbjgbiflinjbdggehcddcbncdddomop']
-if DEBUG:
-    import os  # only if you haven't already imported this
-    import socket  # only if you haven't already imported this
-
-    hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-    INTERNAL_IPS = [ip[:-1] + '1' for ip in ips] + ['127.0.0.1', '10.0.2.2']
-
-USE_X_FORWARDED_HOST = True
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
 TAGGIT_CASE_INSENSITIVE = True
@@ -123,9 +99,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-DATABASES = {
-    "default": dj_database_url.config(default=config('DATABASE_URL'))
-}
 
 cloudinary.config( 
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
@@ -136,17 +109,6 @@ cloudinary.config(
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': "django.db.backends.postgresql",
-#         'HOST': "",
-#         'NAME': "postgres",
-#         'USER': "postgres ",
-#         'PASSWORD': "",
-#         'PORT': "5432",
-
-#     }
-# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -249,9 +211,3 @@ ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 
 
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-    'SIGNING_KEY': SECRET_KEY,
-
-}

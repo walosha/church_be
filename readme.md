@@ -8,7 +8,8 @@
 - pip install -r requirements.txt
 - python manage.py makemigrations
 - python manage.py migrate
-- python manage.py runserver
+- python manage.py runserver --settings=core.settings.local ( Development )
+- python manage.py runserver --settings=core.settings.prod ( Production )
 
 `
 @@ Access swagger documentation on : api/doc/#/
