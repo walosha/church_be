@@ -6,7 +6,7 @@ from decouple import config
 
 load_dotenv()
 
-SECRET_KEY="django-insecure-i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
+SECRET_KEY="9jsgjkww9982827272i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
 
 
 DEBUG = False
@@ -54,3 +54,9 @@ SIMPLE_JWT = {
     'SIGNING_KEY': os.getenv("SECRET_KEY"),
 
 }
+
+
+# Security
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True

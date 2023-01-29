@@ -4,16 +4,25 @@ upstream uwsgi_app {
 
 }
 
-server {
-    listen 80;
-    server_name www.church.com church.com;
-    error_log stderr warn;
-    access_log /dev/stdout main;
+    server {
+        listen 80;
+        server_name www.educaproject.com educaproject.com;
+        return 301 https://$host$request_uri;
+    }
+    server {
+
+        listen 443 ssl;
+        ssl_certificate /code/church/ssl/church.crt;
+        ssl_certificate_key /code/church/ssl/church.key;
+        server_name www.church.com church.com;
+        error_log stderr warn;
+        access_log /dev/stdout main;
 
     location / {
         include /etc/nginx/uwsgi_params;
         uwsgi_pass uwsgi_app;
     }
+    
    location /static/ {
        alias /code/church/static/;
     }

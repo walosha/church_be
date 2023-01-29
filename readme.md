@@ -19,7 +19,18 @@ docker-compose exec web python manage.py migrate
 
 docker compose exec web python /code/church/manage.py collectstatic
 or
-python manage.py collectstatic --settings=educa.settings.local
+python manage.py collectstatic --settings=church.settings.local
+
+python manage.py check --settings=core.settings.prod (church directory)
+
+python manage.py check --deploy --settings=church.settings.prod ( check for deploy issues)
+
+// Generate SSL Cert
+
+openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
+-keyout ssl/church.key -out ssl/church.crt \
+-subj '/CN=_.church.com' \
+-addext 'subjectAltName=DNS:_.church.com'
 
 `
 
