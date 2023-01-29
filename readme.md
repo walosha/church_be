@@ -32,6 +32,9 @@ openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
 -subj '/CN=_.church.com' \
 -addext 'subjectAltName=DNS:_.church.com'
 
+//reload NGNIX
+docker compose exec nginx nginx -s reload
+
 `
 
 ## Features (Content Mgt System)

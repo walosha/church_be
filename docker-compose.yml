@@ -49,5 +49,26 @@ services:
     depends_on:
       - pg1
 
+  daphne:
+    build: .
+    working_dir: /code/church/
+    command:
+      [
+        "../wait-for-it.sh",
+        "pg1:5432",
+        "--",
+        "daphne",
+        "-u",
+        "/code/church/daphne.sock",
+        "core.asgi:application",
+      ]
+    restart: always
+    volumes:
+      - .:/code
+    environment:
+      - DJANGO_SETTINGS_MODULE=core.settings.prod
+    depends_on:
+      - pg1
+      - cache
 volumes:
   pg1_data:
