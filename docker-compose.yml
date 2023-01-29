@@ -8,6 +8,21 @@ services:
     environment:
       - POSTGRES_PASSWORD=password
 
+  cache:
+    image: redis:7.0.4
+    restart: always
+    volumes:
+      - ./data/cache:/data
+
+  nginx:
+    image: nginx:1.23.1
+    restart: always
+    volumes:
+      - ./config/nginx:/etc/nginx/templates
+      - .:/code
+    ports:
+      - "80:80"
+
   web:
     build: .
     command: [
@@ -18,13 +33,14 @@ services:
         "./wait-for-it.sh",
         "pg1:5432",
         "--",
-        "python",
-        "/code/church/manage.py",
-        "runserver",
-        "0.0.0.0:8000",
+        "uwsgi",
+        "--ini",
+        "/code/config/uwsgi/uwsgi.ini",
       ]
 
     restart: always
+    # ports:
+    #   - "8000:8000"
     volumes:
       - .:/code
     environment:

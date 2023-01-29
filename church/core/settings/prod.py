@@ -17,12 +17,14 @@ ADMINS = [
 ]
 
 
-ALLOWED_HOSTS = ['localhost',
-  '127.0.0.1',
-  '*']
+ALLOWED_HOSTS = ["church.com","www.church.com"]
 
 
 INTERNAL_IPS = ["127.0.0.1"]
+
+REDIS_URL = 'redis://cache:6379'
+CACHES['default']['LOCATION'] = REDIS_URL
+# CHANNEL_LAYERS['default']['CONFIG']['hosts'] = [REDIS_URL]
 
 
 USE_X_FORWARDED_HOST = True

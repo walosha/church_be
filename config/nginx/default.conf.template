@@ -1,0 +1,25 @@
+# upstream for uWSGI
+upstream uwsgi_app {
+    server unix:/code/church/uwsgi_app.sock;
+
+}
+
+server {
+    listen 80;
+    server_name www.church.com church.com;
+    error_log stderr warn;
+    access_log /dev/stdout main;
+
+    location / {
+        include /etc/nginx/uwsgi_params;
+        uwsgi_pass uwsgi_app;
+    }
+   location /static/ {
+       alias /code/church/static/;
+    }
+
+    location /media/ {
+        alias /code/church/media/;
+    }
+}
+

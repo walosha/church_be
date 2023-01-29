@@ -19,3 +19,4 @@ google-api-python-client
 psycopg2==2.9.3
 uwsgi==2.0.20
 daphne==3.0.2
+uwsgi==2.0.20
