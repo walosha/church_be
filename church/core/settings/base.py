@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'import_export',
+    "chat",
     'channels',
     'django_filters',
     'taggit',
