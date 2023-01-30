@@ -15,8 +15,7 @@
 @@ Access swagger documentation on : api/doc/#/
 
 `
-docker-compose exec web python manage.py migrate
-
+docker compose exec web python /code/church/manage.py migrate
 docker compose exec web python /code/church/manage.py collectstatic
 or
 python manage.py collectstatic --settings=church.settings.local

@@ -27,3 +27,7 @@ new.json
 old.json
 .env.prod
 data
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

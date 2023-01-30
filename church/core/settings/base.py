@@ -24,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+ASGI_APPLICATION = 'core.routing.application'
 
 # Application definition
 TAGGIT_CASE_INSENSITIVE = True
@@ -42,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt.token_blacklist',
     'import_export',
+    'channels',
     'django_filters',
     'taggit',
     "account",
