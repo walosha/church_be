@@ -12,7 +12,7 @@ import pytz,uuid
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
 service_account_email = os.getenv('GOOGLE_SERVICE_ACCOUNT')
-credentials = service_account.Credentials.from_service_account_file('old.json')
+credentials = service_account.Credentials.from_service_account_file('new.json')
 scoped_credentials = credentials.with_scopes(SCOPES)
 calendarId = os.getenv('CALENDER_ID')
 
@@ -79,7 +79,7 @@ class CalenderCreateAPIView (generics.CreateAPIView):
                 'timeZone': 'US/Central'
             },
             "start": {
-                'dateTime': '2023-01-25T17:00:00-07:00',
+                'dateTime': '2023-01-31T17:00:00-07:00',
                 'timeZone': 'US/Central'
             },
             "conferenceData": {
@@ -97,7 +97,10 @@ class CalenderCreateAPIView (generics.CreateAPIView):
         # Implement worldwide delegation on admin account
         
         # result = service.events().insert(conferenceDataVersion=1,calendarId=calendarId, body=event).execute()
-        result = service.events().insert(calendarId=calendarId, body=event).execute()
+        print("-------------------------------------------------")
+
+        result = service.events().insert( body=event).execute()
+        print("--------------------RESULT--------------------------")
         return response.responses({"data":result.get('organizer'),"status":status.HTTP_201_CREATED})
 
 
