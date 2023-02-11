@@ -3,7 +3,7 @@
 `
 
 - Clone this repository
-- docker compose --build && docker compose up
+- docker-compose --build && docker compose up
 - source ./venv/bin/activate
 - pip install -r requirements.txt
 - python manage.py makemigrations
@@ -15,11 +15,10 @@
 @@ Access swagger documentation on : api/doc/#/
 
 `
-docker compose exec web python /code/church/manage.py migrate
-docker compose exec web python /code/church/manage.py collectstatic
+docker-compose exec web python /code/church/manage.py migrate
+docker-compose exec web python /code/church/manage.py collectstatic
 or
-python manage.py collectstatic --settings=church.settings.local
-
+python manage.py collectstatic --settings=core.settings.local
 python manage.py check --settings=core.settings.prod (church directory)
 
 python manage.py check --deploy --settings=church.settings.prod ( check for deploy issues)
@@ -32,7 +31,7 @@ openssl req -x509 -newkey rsa:2048 -sha256 -days 3650 -nodes \
 -addext 'subjectAltName=DNS:_.church.com'
 
 //reload NGNIX
-docker compose exec nginx nginx -s reload
+docker-compose exec nginx nginx -s reload
 
 `
 

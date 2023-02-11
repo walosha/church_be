@@ -11,8 +11,7 @@ upstream daphne {
 
 server {
         listen 80;
-        # server_name www.church.com church.com;
-          server_name localhost;
+        server_name 157.230.16.234;
 
         return 301 https://$host$request_uri;
     }
@@ -21,8 +20,7 @@ server {
         listen 443 ssl;
         ssl_certificate /code/church/ssl/church.crt;
         ssl_certificate_key /code/church/ssl/church.key;
-        # server_name www.church.com church.com;
-          server_name localhost;
+        server_name 157.230.16.234;
         error_log stderr warn;
         access_log /dev/stdout main;
 
