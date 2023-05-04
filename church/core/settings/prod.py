@@ -39,9 +39,11 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "postgres",
         "USER": "postgres",
-        "PASSWORD": "password",
-        "HOST": "pg1,",  # set in docker-compose.yml
+        "PASSWORD": "Olajuwon1@?",
+        "HOST": "db.ixtifnmuigogotznilwt.supabase.co",  # set in docker-compose.yml
         "PORT": 5432,  # default postgres port
+        'OPTIONS': {'sslmode': 'require'},
+
     }
 }
 
