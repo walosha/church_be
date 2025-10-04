@@ -1,4 +1,5 @@
 import os
+import json
 from .models import Event
 from rest_framework import generics, response, status
 from .serializers import EventSerializer, CalenderSerializer
@@ -9,11 +10,21 @@ from datetime import datetime
 import pytz
 import uuid
 
-
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
-service_account_email = os.getenv('GOOGLE_SERVICE_ACCOUNT')
-credentials = service_account.Credentials.from_service_account_file('new.json')
-scoped_credentials = credentials.with_scopes(SCOPES)
+
+# Load credentials from environment variable
+
+
+def get_google_credentials():
+    google_creds_json = os.getenv('GOOGLE_SERVICE_ACCOUNT')
+    if google_creds_json:
+        creds_dict = json.loads(google_creds_json)
+        credentials = service_account.Credentials.from_service_account_info(
+            creds_dict)
+        return credentials.with_scopes(SCOPES)
+    return None
+
+
 calendarId = os.getenv('CALENDER_ID')
 
 
@@ -44,8 +55,10 @@ class EventUpdateAPIView (generics.UpdateAPIView):
 
 
 def build_service(request):
-
-    service = build("calendar", "v3", credentials=scoped_credentials)
+    credentials = get_google_credentials()
+    if not credentials:
+        raise Exception("Google credentials not configured")
+    service = build("calendar", "v3", credentials=credentials)
     return service
 
 
