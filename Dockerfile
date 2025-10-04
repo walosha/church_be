@@ -1,20 +1,33 @@
-# Pull official base Python Docker image
-FROM python:3.10.6
-# Set environment variables
+FROM python:3.10.6-slim
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
-# Set work directory
+ENV DJANGO_SETTINGS_MODULE=core.settings.railway
+
 WORKDIR /code
-# Install dependencies
-RUN pip install --upgrade pip
 
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    gcc \
+    postgresql-client \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python dependencies
 COPY requirements.txt /code/
-RUN pip install -r requirements.txt
-COPY ./entrypoint.sh /entrypoint.sh
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt && \
+    pip install gunicorn whitenoise
 
-RUN chmod +x /entrypoint.sh
-
+# Copy project
 COPY . /code/
 
-ENTRYPOINT [ "/entrypoint.sh" ]
+# Create directories
+RUN mkdir -p /code/church/static /code/church/media
 
+WORKDIR /code/church
+
+# Run migrations and collectstatic, then start server
+CMD python manage.py migrate --noinput && \
+    python manage.py collectstatic --noinput && \
+    gunicorn core.wsgi:application --bind 0.0.0.0:$PORT --workers 4

@@ -31,7 +31,7 @@ services:
     volumes:
       - .:/code
     environment:
-      - DJANGO_SETTINGS_MODULE=core.settings.prod
+      - DJANGO_SETTINGS_MODULE=core.settings.railway
 
   daphne:
     build: .
