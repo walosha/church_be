@@ -22,3 +22,4 @@ daphne==3.0.2
 uwsgi==2.0.20
 python-dateutil==1.4
 channels==3.0.5
+pytz

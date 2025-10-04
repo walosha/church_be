@@ -1,13 +1,13 @@
 import os
 from .models import Event
-from rest_framework import generics,response,status
-from .serializers import EventSerializer,CalenderSerializer
+from rest_framework import generics, response, status
+from .serializers import EventSerializer, CalenderSerializer
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 from googleapiclient.errors import HttpError
-from datetime import  datetime 
-import pytz,uuid
-
+from datetime import datetime
+import pytz
+import uuid
 
 
 SCOPES = ["https://www.googleapis.com/auth/calendar"]
@@ -15,6 +15,7 @@ service_account_email = os.getenv('GOOGLE_SERVICE_ACCOUNT')
 credentials = service_account.Credentials.from_service_account_file('new.json')
 scoped_credentials = credentials.with_scopes(SCOPES)
 calendarId = os.getenv('CALENDER_ID')
+
 
 class EventListCreateAPIView (generics.ListCreateAPIView):
     queryset = Event.objects.all()
@@ -42,25 +43,21 @@ class EventUpdateAPIView (generics.UpdateAPIView):
     serializer_class = EventSerializer
 
 
-
-
-
 def build_service(request):
 
     service = build("calendar", "v3", credentials=scoped_credentials)
     return service
 
+
 class CalenderCreateAPIView (generics.CreateAPIView):
     serializer_class = CalenderSerializer
 
-  
     def post(self, request, *args, **kwargs):
         request = request.data
         if self.request:
             return self.form_valid(request)
         else:
             return self.form_valid(request)
-
 
     def form_valid(self, request):
 
@@ -83,26 +80,25 @@ class CalenderCreateAPIView (generics.CreateAPIView):
                 'timeZone': 'US/Central'
             },
             "conferenceData": {
-                "entryPoints": [{"entryPointType": "video",}],
+                "entryPoints": [{"entryPointType": "video", }],
                 "createRequest": {
-                "conferenceSolutionKey": {
-                    "type": "hangoutsMeet"
-                },
-                "requestId": f"{uuid.uuid4().hex}"
+                    "conferenceSolutionKey": {
+                        "type": "hangoutsMeet"
+                    },
+                    "requestId": f"{uuid.uuid4().hex}"
                 }
             },
             "summary": eventTitle
-            }
+        }
 
         # Implement worldwide delegation on admin account
-        
+
         # result = service.events().insert(conferenceDataVersion=1,calendarId=calendarId, body=event).execute()
         print("-------------------------------------------------")
 
-        result = service.events().insert( body=event).execute()
+        result = service.events().insert(body=event).execute()
         print("--------------------RESULT--------------------------")
-        return response.responses({"data":result.get('organizer'),"status":status.HTTP_201_CREATED})
-
+        return response.responses({"data": result.get('organizer'), "status": status.HTTP_201_CREATED})
 
     def get_context_data(self, request):
         """Shows basic usage of the Google Calendar API.
@@ -110,12 +106,12 @@ class CalenderCreateAPIView (generics.CreateAPIView):
         """
 
         try:
-        
+
             service = build_service(self.request)
 
             events_result = service.events().list(calendarId=calendarId, timeMin='2022-01-25T17:00:00-07:00',
-                                                maxResults=10, singleEvents=True,
-                                                orderBy='startTime').execute()
+                                                  maxResults=10, singleEvents=True,
+                                                  orderBy='startTime').execute()
             events = events_result.get('items', [])
 
             if not events:
@@ -124,10 +120,10 @@ class CalenderCreateAPIView (generics.CreateAPIView):
 
             # Prints the start and name of the next 10 events
             for event in events:
-                start = event['start'].get('dateTime', event['start'].get('date'))
-                print("---",start, event['summary'],"---")
-            return response.responses(data=event,status=status.HTTP_201_CREATED)
-                
+                start = event['start'].get(
+                    'dateTime', event['start'].get('date'))
+                print("---", start, event['summary'], "---")
+            return response.responses(data=event, status=status.HTTP_201_CREATED)
+
         except HttpError as error:
-          print('An error occurred: %s' % error)
-  
+            print('An error occurred: %s' % error)

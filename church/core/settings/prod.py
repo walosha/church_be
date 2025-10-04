@@ -7,10 +7,11 @@ from decouple import config
 
 load_dotenv()
 
+
 SECRET_KEY = "9jsgjkww9982827272i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
 
 
-DEBUG = False
+DEBUG = True
 
 
 ADMINS = [
@@ -18,7 +19,9 @@ ADMINS = [
 ]
 
 
-ALLOWED_HOSTS = ["church.com", "www.church.com"]
+ALLOWED_HOSTS = [
+    "*"
+]
 
 
 INTERNAL_IPS = ["127.0.0.1"]

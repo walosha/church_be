@@ -8,10 +8,12 @@ from decouple import config
 load_dotenv()
 
 
-SECRET_KEY="django-insecure-i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
+SECRET_KEY = "django-insecure-i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "*"
+]
 
 
 os.getenv
