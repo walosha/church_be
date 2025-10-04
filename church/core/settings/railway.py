@@ -12,28 +12,32 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 # Database configuration with proper fallback
-DATABASE_URL = os.environ.get('DATABASE_URL')
+# Get Railway PostgreSQL variables directly
+PGHOST = os.environ.get('PGHOST')
+PGPORT = os.environ.get('PGPORT', '5432')
+PGDATABASE = os.environ.get('PGDATABASE')
+PGUSER = os.environ.get('PGUSER')
+PGPASSWORD = os.environ.get('PGPASSWORD')
 
-if DATABASE_URL:
-    DATABASES = {
-        'default': dj_database_url.parse(
-            DATABASE_URL,
-            conn_max_age=600,
-            conn_health_checks=True,
-        )
-    }
-else:
-    # Fallback for local development
+# Database Configuration
+if all([PGHOST, PGDATABASE, PGUSER, PGPASSWORD]):
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DB_NAME', 'church'),
-            'USER': os.environ.get('DB_USER', 'postgres'),
-            'PASSWORD': os.environ.get('DB_PASSWORD', ''),
-            'HOST': os.environ.get('DB_HOST', 'localhost'),
-            'PORT': os.environ.get('DB_PORT', '5432'),
+            'NAME': PGDATABASE,
+            'USER': PGUSER,
+            'PASSWORD': PGPASSWORD,
+            'HOST': PGHOST,
+            'PORT': PGPORT,
+            'CONN_MAX_AGE': 600,
+            'OPTIONS': {
+                'connect_timeout': 10,
+            }
         }
     }
+else:
+    raise Exception(
+        f"Database variables missing! PGHOST={PGHOST}, PGDATABASE={PGDATABASE}")
 
 # Redis Cache
 REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379')
