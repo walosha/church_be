@@ -69,10 +69,9 @@ MEDIA_URL = "/media/"
 CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379',
+        'LOCATION': os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379'),
     }
 }
-
 
 
 MIDDLEWARE = [
@@ -110,15 +109,11 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 
-
-cloudinary.config( 
+cloudinary.config(
     cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
     api_key=os.getenv("CLOUDINARY_API_KEY"),
     api_secret=os.getenv("CLOUDINARY_API_SECRET"),
 )
-
-
-
 
 
 # Password validation
@@ -178,10 +173,6 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-
-
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -220,5 +211,3 @@ REST_FRAMEWORK = {
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
-
-

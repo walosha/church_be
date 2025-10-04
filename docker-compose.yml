@@ -1,19 +1,5 @@
 version: "3.7"
 services:
-  pg1:
-    container_name: church_postgres
-    image: postgres
-    volumes:
-      - pg1_data:/var/lib/postgresql/data
-    environment:
-      - POSTGRES_PASSWORD=password
-
-  cache:
-    image: redis:7.0.4
-    restart: always
-    volumes:
-      - ./data/cache:/data
-
   nginx:
     image: nginx:1.23.1
     restart: always
@@ -46,8 +32,6 @@ services:
       - .:/code
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.prod
-    depends_on:
-      - pg1
 
   daphne:
     build: .
@@ -67,8 +51,5 @@ services:
       - .:/code
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.prod
-    depends_on:
-      - pg1
-      - cache
 volumes:
   pg1_data:

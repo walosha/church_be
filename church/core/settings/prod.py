@@ -1,3 +1,4 @@
+import os
 import dj_database_url
 from .base import *
 from dotenv import load_dotenv
@@ -6,23 +7,23 @@ from decouple import config
 
 load_dotenv()
 
-SECRET_KEY="9jsgjkww9982827272i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
+SECRET_KEY = "9jsgjkww9982827272i3518xh534trgj8z%dbs+jnxi)s=y-xe75q7im1iil$3!u0$v^"
 
 
 DEBUG = False
 
 
 ADMINS = [
-('Olawae Afuye', 'hello@pacific-professional.com.ng'),
+    ('Olawae Afuye', 'hello@pacific-professional.com.ng'),
 ]
 
 
-ALLOWED_HOSTS = ["church.com","www.church.com"]
+ALLOWED_HOSTS = ["church.com", "www.church.com"]
 
 
 INTERNAL_IPS = ["127.0.0.1"]
 
-REDIS_URL = 'redis://cache:6379'
+REDIS_URL = config("REDIS_URL", default="redis://127.0.0.1:6379")
 CACHES['default']['LOCATION'] = REDIS_URL
 # CHANNEL_LAYERS['default']['CONFIG']['hosts'] = [REDIS_URL]
 
@@ -32,22 +33,14 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_ALL_ORIGINS = True
 
-               
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "postgres",
-        "USER": "postgres",
-        "PASSWORD": "Olajuwon1@?",
-        "HOST": "db.ixtifnmuigogotznilwt.supabase.co",  # set in docker-compose.yml
-        "PORT": 5432,  # default postgres port
-        'OPTIONS': {'sslmode': 'require'},
-
-    }
+    "default": dj_database_url.parse(
+        config("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
-
-
 
 
 SIMPLE_JWT = {
