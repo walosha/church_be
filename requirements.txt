@@ -23,3 +23,5 @@ uwsgi==2.0.20
 python-dateutil==1.4
 channels==3.0.5
 pytz
+gunicorn==20.1.0
+whitenoise==6.4.0

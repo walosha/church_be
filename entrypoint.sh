@@ -3,7 +3,7 @@
 # Exit on error
 set -e
 
-# Wait for database to be ready (if using PostgreSQL/MySQL)
+# Wait for database to be ready
 echo "Waiting for database..."
 sleep 5
 
@@ -13,8 +13,7 @@ python /code/church/manage.py migrate --noinput
 
 # Collect static files
 echo "Collecting static files..."
-python /code/church/manage.py collectstatic --noinput
+python /code/church/manage.py collectstatic --noinput --clear
 
-# Start the application
 echo "Starting application..."
 exec "$@"
