@@ -12,7 +12,6 @@ DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 # Database configuration with proper fallback
-# Get Railway PostgreSQL variables directly
 PGHOST = os.environ.get('PGHOST')
 PGPORT = os.environ.get('PGPORT', '5432')
 PGDATABASE = os.environ.get('PGDATABASE')
@@ -44,6 +43,18 @@ REDIS_URL = os.environ.get('REDIS_URL', 'redis://127.0.0.1:6379')
 if REDIS_URL:
     CACHES['default']['LOCATION'] = REDIS_URL
 
+# Static files configuration
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+
+# WhiteNoise for static files - IMPORTANT for serving Swagger UI
+MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# CORS - Allow all for testing (restrict in production)
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
 # Security Settings (only in production)
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
@@ -51,14 +62,14 @@ if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# CORS
-CORS_ALLOW_ALL_ORIGINS = DEBUG  # Only allow all in development
-if not DEBUG:
+    # Restrict CORS in production
     cors_origins = os.environ.get('CORS_ALLOWED_ORIGINS', '')
     if cors_origins:
         CORS_ALLOWED_ORIGINS = cors_origins.split(',')
-    else:
         CORS_ALLOW_ALL_ORIGINS = False
+else:
+    # Development - still need proxy header for Railway
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # JWT
 SIMPLE_JWT = {
@@ -67,10 +78,10 @@ SIMPLE_JWT = {
     'SIGNING_KEY': SECRET_KEY,
 }
 
-# Static files
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-
-# WhiteNoise for static files
-MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# Spectacular settings override for Railway
+SPECTACULAR_SETTINGS.update({
+    'SERVE_INCLUDE_SCHEMA': False,
+    'SWAGGER_UI_DIST': 'SIDECAR',
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+})
